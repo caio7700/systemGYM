@@ -1,14 +1,15 @@
 package entity;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import java.time.LocalDate;
 
 
 @Entity
 public class Aluno {
 @Id
-   // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     // @NotBlank(message = "O nome é obrigatório e não pode estar em branco")
     private String nome;
@@ -20,6 +21,18 @@ public class Aluno {
     private String cpf;
  //@Past(message = "A data de nascimento deve ser uma data passada.")
     private LocalDate dataNascimento;
+
+    public Aluno() {
+    }
+
+    public Aluno( int id, String nome, String email, String telefone, String cpf, LocalDate dataNascimento) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+        this.cpf = cpf;
+        this.dataNascimento = dataNascimento;
+    }
 
     public int getId() {
         return id;
