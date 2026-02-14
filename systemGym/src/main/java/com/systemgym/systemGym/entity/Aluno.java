@@ -1,25 +1,35 @@
-package entity;
+package com.systemgym.systemgym.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import jakarta.persistence.Table;
 
 @Entity
-public class Aluno {
-@Id
-    // @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    // @NotBlank(message = "O nome é obrigatório e não pode estar em branco")
+@Table(name = "tb_aluno") // Define o nome da tabela no MySQL
+public class Aluno implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // O MySQL cuidará dos IDs (1, 2, 3...)
+    private Integer id; // Use Integer (objeto) em vez de int (primitivo) para permitir nulos
+
+    @Column(nullable = false, length = 150)
     private String nome;
-    // @NotBlank(message = "O email é obrigatório e não pode estar em branco")
+
+    @Column(nullable = false, unique = true)
     private String email;
-    // @NotBlank(message = "O telefone é obrigatório e não pode estar em branco")
+
     private String telefone;
-    // @NotBlank(message = "O CPF é obrigatório e não pode estar em branco")
+
+    @Column(nullable = false, unique = true, length = 14)
     private String cpf;
- //@Past(message = "A data de nascimento deve ser uma data passada.")
+
     private LocalDate dataNascimento;
 
     public Aluno() {
