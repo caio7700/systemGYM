@@ -17,7 +17,7 @@ public class Aluno implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // O MySQL cuidará dos IDs (1, 2, 3...)
-    private Integer id; // Use Integer (objeto) em vez de int (primitivo) para permitir nulos
+    private Long id; // Use Integer (objeto) em vez de int (primitivo) para permitir nulos
 
     @Column(nullable = false, length = 150)
     private String nome;
@@ -35,7 +35,7 @@ public class Aluno implements Serializable {
     public Aluno() {
     }
 
-    public Aluno( int id, String nome, String email, String telefone, String cpf, LocalDate dataNascimento) {
+    public Aluno( Long id, String nome, String email, String telefone, String cpf, LocalDate dataNascimento) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -44,10 +44,10 @@ public class Aluno implements Serializable {
         this.dataNascimento = dataNascimento;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

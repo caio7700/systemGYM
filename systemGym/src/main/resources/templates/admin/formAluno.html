@@ -1,77 +1,72 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.springframework.org/tags/form"
-	xmlns:s="http://www.springframework.org/tags">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-	crossorigin="anonymous">
-<title>Formulário do Aluno</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <title>Formulário do Aluno - SystemGym</title>
 </head>
-<body>
-	<header>
-
-        	</header>
-<div class="container shadow-sm">
-    <h2 class="text-center mb-4">Cadastro de Aluno</h2>
+<body class="d-flex flex-column min-vh-100 bg-light">
     
-    <form th:action="@{/admin/aluno/salvar}" th:object="${aluno}" method="post">
-        
-        <div class="mb-3">
-            <label for="nome" class="form-label">Nome Completo</label>
-            <input type="text" th:field="*{nome}" class="form-control" id="nome" placeholder="Digite o nome" required maxlength="150">
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="email" class="form-label">E-mail</label>
-                <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="email@exemplo.com" required>
-            </div>
+    <main class="flex-grow-1 container mt-5">
+        <div class="card shadow p-4">
+            <h2 class="text-center mb-4" th:text="${aluno.id == null} ? 'Cadastro de Aluno' : 'Editar Aluno'"></h2>
             
-            <div class="col-md-6 mb-3">
-                <label for="telefone" class="form-label">Telefone</label>
-                <input type="text" th:field="*{telefone}" class="form-control" id="telefone" placeholder="(00) 00000-0000">
-            </div>
+            <form th:action="@{/admin/aluno/salvar}" th:object="${aluno}" method="post">
+                
+                <input type="hidden" th:field="*{id}">
+                
+                <div class="mb-3">
+                    <label for="nome" class="form-label">Nome Completo</label>
+                    <input type="text" th:field="*{nome}" class="form-control" id="nome" placeholder="Digite o nome" required maxlength="150">
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="email" class="form-label">E-mail</label>
+                        <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="email@exemplo.com" required>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label for="telefone" class="form-label">Telefone</label>
+                        <input type="text" th:field="*{telefone}" class="form-control" id="telefone" placeholder="(00) 00000-0000">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="cpf" class="form-label">CPF</label>
+                        <input type="text" th:field="*{cpf}" class="form-control" id="cpf" placeholder="000.000.000-00" required maxlength="14">
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="dataNascimento" class="form-label">Data de Nascimento</label>
+                        <input type="date" th:field="*{dataNascimento}" class="form-control" id="dataNascimento" required>
+                    </div>
+                </div>
+
+                <hr>
+                
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary" th:text="${aluno.id == null} ? 'Salvar Aluno' : 'Atualizar Dados'"></button>
+                    <a th:href="@{/admin/aluno/lista}" class="btn btn-outline-secondary">Voltar para a Lista</a>
+                </div>
+            </form>
         </div>
+    </main>
 
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="cpf" class="form-label">CPF</label>
-                <input type="text" th:field="*{cpf}" class="form-control" id="cpf" placeholder="000.000.000-00" required maxlength="14">
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="dataNascimento" class="form-label">Data de Nascimento</label>
-                <input type="date" th:field="*{dataNascimento}" class="form-control" id="dataNascimento" required>
-            </div>
+    <footer class="card text-bg-dark mt-4 shadow-sm" style="width: 100%; border-radius: 0;">
+        <div class="card-header text-center">
+            <h4 class="mb-0">SYSTEMGYM</h4>
         </div>
-
-        <hr>
-        
-        <div class="d-grid gap-2">
-            <button type="submit" class="btn btn-primary">Salvar Aluno</button>
-            <a href="/admin/aluno" class="btn btn-outline-secondary">Limpar</a>
+        <div class="card-body text-center">
+            <h5 class="card-title">Produced By</h5>
+            <p class="card-text">Caio Rocha</p>
         </div>
-    </form>
-</div>
+    </footer>
 
-	<footer class="card text-bg-dark mb-3"
-		style="max-width: 80rem; margin-top: 240px;">
-		<div class="card-header" style="padding-left: 557px;">
-			<h4>SYSTEMGYM</h4>
-		</div>
-		<div class="card-body">
-			<h5 class="card-title" style="padding-left: 535px;">Producted By</h5>
-			<p class="card-text" style="padding-left: 500px;">Caio Rocha</p>
-		</div>
-	</footer>
-
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-		crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 </html>
