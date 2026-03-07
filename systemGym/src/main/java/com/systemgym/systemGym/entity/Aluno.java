@@ -5,6 +5,8 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,16 +34,20 @@ public class Aluno implements Serializable {
 
     private LocalDate dataNascimento;
 
+    @Enumerated(EnumType.STRING) // Salva o nome da constante no banco (ATIVO/INATIVO)
+    private StatusAluno status = StatusAluno.ATIVO; // Padrão: novo aluno já começa ativo
+
     public Aluno() {
     }
 
-    public Aluno( Long id, String nome, String email, String telefone, String cpf, LocalDate dataNascimento) {
+    public Aluno( Long id, String nome, String email, String telefone, String cpf, LocalDate dataNascimento, StatusAluno status) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
+        this.status = status;
     }
 
     public Long getId() {
@@ -87,11 +93,17 @@ public class Aluno implements Serializable {
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
+    public StatusAluno getStatus() {
+        return status;
+    }
+    public void setStatus(StatusAluno status) {
+        this.status = status;
+    }
 
     @Override
     public String toString() {
         return "Aluno [id=" + id + ", nome=" + nome + ", email=" + email + ", telefone=" + telefone + ", cpf=" + cpf
-                + ", dataNascimento=" + dataNascimento + "]";
+                + ", dataNascimento=" + dataNascimento + ", status=" + status + "]";
     }
 
 
