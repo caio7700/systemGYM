@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Lista de Planos - SystemGym</title>
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+    <main class="flex-grow-1 container mt-5">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h3 class="mb-0">Planos da Academia</h3>
+                <a th:href="@{/admin/plano/novo}" class="btn btn-light btn-sm">Novo Plano</a>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome do Plano</th>
+                            <th>Duração (Meses)</th>
+                            <th>Valor Total</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="p : ${planos}">
+                            <td th:text="${p.id}">1</td>
+                            <td th:text="${p.nome}">Mensal</td>
+                            <td th:text="${p.duracaoMeses} + ' Meses'">12</td>
+                            <td th:text="'R$ ' + ${#numbers.formatDecimal(p.valor, 1, 'POINT', 2, 'COMMA')}">R$ 99,90
+                            </td>
+                            <td>
+                                <a th:href="@{/admin/plano/editar/{id}(id=${p.id})}"
+                                    class="btn btn-warning btn-sm">Editar</a>
+                                <a th:href="@{/admin/plano/excluir/{id}(id=${p.id})}" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Tem certeza que deseja excluir este plano? Esta ação não pode ser desfeita.')">
+                                    Excluir
+                                </a>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(planos)}">
+                            <td colspan="5" class="text-center text-muted">Nenhum plano cadastrado ainda.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer text-center">
+                <a th:href="@{/admin/aluno/lista}" class="btn btn-secondary btn-sm">Voltar para Lista de Alunos</a>
+            </div>
+            <div th:if="${mensagem}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <span th:text="${mensagem}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <div th:if="${erro}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <span th:text="${erro}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="card text-bg-dark mt-4 shadow-sm" style="width: 100%; border-radius: 0;">
+        <div class="card-header text-center">
+            <h4 class="mb-0">SYSTEMGYM</h4>
+        </div>
+        <div class="card-body text-center">
+            <h5 class="card-title">Produced By</h5>
+            <p class="card-text">Caio Rocha</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

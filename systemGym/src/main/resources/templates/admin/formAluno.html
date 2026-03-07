@@ -59,6 +59,17 @@
                                 th:value="${s}" th:text="${s.descricao}"></option>
                         </select>
                     </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="plano" class="form-label">Plano de Matrícula</label>
+                        <select th:field="*{plano}" class="form-select" id="plano" required>
+                            <option value="" selected disabled>Selecione um plano...</option>
+                            <option th:each="p : ${planos}" th:value="${p.id}"
+                                th:text="${p.nome} + ' (R$ ' + ${p.valor} + ')'">
+                            </option>
+                        </select>
+                    </div>
+
                 </div>
 
                 <hr>

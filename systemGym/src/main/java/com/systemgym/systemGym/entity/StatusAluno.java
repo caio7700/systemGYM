@@ -4,7 +4,7 @@ public enum StatusAluno {
     ATIVO("Ativo"),
     INATIVO("Inativo");
 
-    private String descricao;
+    private final String descricao;
 
     StatusAluno(String descricao) {
         this.descricao = descricao;

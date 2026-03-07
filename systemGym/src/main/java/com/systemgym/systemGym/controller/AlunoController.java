@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.systemgym.systemgym.entity.Aluno;
 import com.systemgym.systemgym.repository.AlunoRepository;
+import com.systemgym.systemgym.repository.PlanoRepository;
 
 @Controller
 @RequestMapping("admin/aluno")
@@ -19,11 +20,16 @@ public class AlunoController {
 
     @Autowired
     private AlunoRepository alunoRepository; // Injeção de dependência
+    @Autowired
+    private PlanoRepository planoRepository; // Injeta o repositório de planos
 
     // Exibe o formulário de cadastro
     @GetMapping("/novo")
-    public String exibirFormulario(Aluno aluno) {
-        return "admin/formAluno";
+public String exibirFormulario(Model model) {
+    model.addAttribute("aluno", new Aluno());
+    // BUSCA A LISTA DE PLANOS E ENVIA PARA O FORMULÁRIO
+    model.addAttribute("planos", planoRepository.findAll()); 
+    return "admin/formAluno";
     }
 
     // Salva o aluno no MySQL
@@ -50,11 +56,10 @@ public class AlunoController {
 
     @GetMapping("/editar/{id}")
     public String editarAluno(@PathVariable("id") Long id, Model model) {
-    // Busca o aluno no banco pelo ID. Se não encontrar, lança uma exceção ou redireciona.
-    Aluno aluno = alunoRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("ID de aluno inválido:" + id));
-    
-    model.addAttribute("aluno", aluno); // Passa o aluno encontrado para o formulário
+    Aluno aluno = alunoRepository.findById(id).orElseThrow();
+    model.addAttribute("aluno", aluno);
+    // TAMBÉM PRECISA ENVIAR A LISTA AQUI PARA PODER TROCAR O PLANO
+    model.addAttribute("planos", planoRepository.findAll()); 
     return "admin/formAluno"; // Reutilizamos o mesmo formulário de cadastro
     }
 }

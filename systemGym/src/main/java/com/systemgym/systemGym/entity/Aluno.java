@@ -10,6 +10,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -36,6 +38,10 @@ public class Aluno implements Serializable {
 
     @Enumerated(EnumType.STRING) // Salva o nome da constante no banco (ATIVO/INATIVO)
     private StatusAluno status = StatusAluno.ATIVO; // Padrão: novo aluno já começa ativo
+
+    @ManyToOne
+    @JoinColumn(name = "plano_id") // Cria uma chave estrangeira no MySQL
+    private Plano plano;
 
     public Aluno() {
     }
@@ -99,11 +105,17 @@ public class Aluno implements Serializable {
     public void setStatus(StatusAluno status) {
         this.status = status;
     }
+    public Plano getPlano() {
+        return plano;
+    }
+    public void setPlano(Plano plano) {
+        this.plano = plano;
+    }
 
     @Override
     public String toString() {
         return "Aluno [id=" + id + ", nome=" + nome + ", email=" + email + ", telefone=" + telefone + ", cpf=" + cpf
-                + ", dataNascimento=" + dataNascimento + ", status=" + status + "]";
+                + ", dataNascimento=" + dataNascimento + ", status=" + status + ", plano=" + plano + "]";
     }
 
 

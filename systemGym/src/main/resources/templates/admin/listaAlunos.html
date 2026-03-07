@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -30,6 +30,7 @@
                                     <th>CPF</th>
                                     <th>Data de Nasc.</th>
                                     <th>Status</th>
+                                    <th>Plano</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -49,6 +50,7 @@
                                             Ativo
                                         </span>
                                     </td>
+                                    <td th:text="${aluno.plano != null} ? ${aluno.plano.nome} : 'Sem Plano'">Mensal</td>
                                     <td>
                                         <a th:href="@{/admin/aluno/editar/{id}(id=${aluno.id})}"
                                             class="btn btn-warning btn-sm">Editar</a>
