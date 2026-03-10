@@ -15,6 +15,14 @@
             <div class="container mt-5">
                 <div class="card shadow">
                     <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">Gestão de Alunos</h3>
+                        <div>
+                            <a th:href="@{/admin/pagamento/extrato}" class="btn btn-warning btn-sm">
+                                Ver Extrato Financeiro
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                         <h2 class="mb-0">Alunos Cadastrados</h2>
                         <a th:href="@{/admin/aluno/novo}" class="btn btn-light btn-sm">Novo Aluno</a>
                     </div>
@@ -32,6 +40,8 @@
                                     <th>Status</th>
                                     <th>Plano</th>
                                     <th>Ações</th>
+                                    <th>Vencimento</th>
+                                    <th>Pagamento</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,6 +67,18 @@
                                         <a th:href="@{/admin/aluno/excluir/{id}(id=${aluno.id})}"
                                             class="btn btn-danger btn-sm"
                                             onclick="return confirm('Tem certeza que deseja excluir este aluno?')">Excluir</a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a th:href="@{/admin/pagamento/novo/{id}(id=${aluno.id})}"
+                                            class="btn btn-outline-success btn-sm" title="Registrar Pagamento">
+                                            $
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <span
+                                            th:text="${aluno.dataVencimento != null} ? ${#temporals.format(aluno.dataVencimento, 'dd/MM/yyyy')} : 'Pendente'"
+                                            th:classappend="${aluno.dataVencimento != null and aluno.dataVencimento.isBefore(T(java.time.LocalDate).now())} ? 'text-danger fw-bold' : ''">
+                                        </span>
                                     </td>
                                 </tr>
 

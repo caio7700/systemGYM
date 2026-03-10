@@ -43,10 +43,12 @@ public class Aluno implements Serializable {
     @JoinColumn(name = "plano_id") // Cria uma chave estrangeira no MySQL
     private Plano plano;
 
+    private LocalDate dataVencimento;
+
     public Aluno() {
     }
 
-    public Aluno( Long id, String nome, String email, String telefone, String cpf, LocalDate dataNascimento, StatusAluno status) {
+    public Aluno( Long id, String nome, String email, String telefone, String cpf, LocalDate dataNascimento, StatusAluno status, LocalDate dataVencimento) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -54,6 +56,7 @@ public class Aluno implements Serializable {
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
         this.status = status;
+        this.dataVencimento = dataVencimento;
     }
 
     public Long getId() {
@@ -111,11 +114,17 @@ public class Aluno implements Serializable {
     public void setPlano(Plano plano) {
         this.plano = plano;
     }
+    public LocalDate getDataVencimento() {
+        return dataVencimento;
+    }
+    public void setDataVencimento(LocalDate dataVencimento) {
+        this.dataVencimento = dataVencimento;
+    }
 
     @Override
     public String toString() {
         return "Aluno [id=" + id + ", nome=" + nome + ", email=" + email + ", telefone=" + telefone + ", cpf=" + cpf
-                + ", dataNascimento=" + dataNascimento + ", status=" + status + ", plano=" + plano + "]";
+                + ", dataNascimento=" + dataNascimento + ", status=" + status + ", plano=" + plano + ", dataVencimento=" + dataVencimento + "]";
     }
 
 
