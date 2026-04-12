@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.systemgym.systemgym.repository.AlunoRepository;
 import com.systemgym.systemgym.repository.FuncionarioRepository;
@@ -23,7 +23,12 @@ public class DashboardController {
 
     @GetMapping("/")
     public String redirecionar() {
-    return "redirect:/admin/dashboard";
+        return "redirect:/admin/dashboard";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "admin/login";
     }
 
     @GetMapping("/admin/dashboard")
