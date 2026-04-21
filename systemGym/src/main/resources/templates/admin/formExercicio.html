@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <title>Cadastro de Exercício - SystemGym</title>
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-dark bg-dark mb-4">
+        <div th:replace="~{admin/fragments :: cabecalho}"></div>
+    </nav>
+    <main class="container mt-5">
+        <div class="card shadow p-4 mx-auto" style="max-width: 800px;">
+            <h2 class="text-center mb-4" th:text="${exercicio.id == null} ? 'Novo Exercício' : 'Editar Exercício'"></h2>
+            <form th:action="@{/admin/exercicio/salvar}" th:object="${exercicio}" method="post">
+                <div class="mb-3">
+                    <label>Nome do Exercício</label>
+                    <input type="text" th:field="*{nome}" class="form-control" placeholder="Ex: Supino Reto" required>
+                </div>
+                <div class="mb-3">
+                    <label>Grupo Muscular</label>
+                    <select th:field="*{grupoMuscular}" class="form-select">
+                        <option value="Peito">Peito</option>
+                        <option value="Costas">Costas</option>
+                        <option value="Pernas">Pernas</option>
+                        <option value="Ombros">Ombros</option>
+                        <option value="Bíceps">Bíceps</option>
+                        <option value="Tríceps">Tríceps</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </form>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

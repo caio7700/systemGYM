@@ -43,6 +43,7 @@
                                     <th>Status</th>
                                     <th>Plano</th>
                                     <th>Ações</th>
+                                    <th>Treino</th>
                                     <th>Pagamento</th>
                                     <th>Vencimento</th>
                             </thead>
@@ -69,6 +70,12 @@
                                         <a th:href="@{/admin/aluno/excluir/{id}(id=${aluno.id})}"
                                             class="btn btn-danger btn-sm"
                                             onclick="return confirm('Tem certeza que deseja excluir este aluno?')">Excluir</a>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/admin/treino/aluno/{id}(id=${aluno.id})}"
+                                            class="btn btn-outline-info btn-sm" title="Ficha de Treino">
+                                            📋
+                                        </a>
                                     </td>
                                     <td class="text-center">
                                         <a th:href="@{/admin/pagamento/novo/{id}(id=${aluno.id})}"
