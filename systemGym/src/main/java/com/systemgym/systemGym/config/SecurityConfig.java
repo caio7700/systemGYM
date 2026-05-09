@@ -18,39 +18,56 @@ public class SecurityConfig {
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
         .authorizeHttpRequests((requests) -> requests
-            // LIBERAÇÃO EXPLÍCITA: Permite acesso total à página de login e recursos estáticos
-            .requestMatchers("/login", "/css/**", "/js/**", "/images/**").permitAll() 
-            // TODO O RESTO: Exige que o usuário esteja logado
+            .requestMatchers("/login", "/css/**", "/js/**").permitAll()
+            
+            // ADMIN: Controle total
+            .requestMatchers("/admin/funcionario/**", "/admin/financeiro/**").hasRole("ADMIN")
+            
+            // INSTRUTOR: Foco nos treinos e alunos
+            .requestMatchers("/admin/treino/**", "/admin/exercicio/**").hasAnyRole("ADMIN", "INSTRUTOR")
+            
+            // RECEPCIONISTA: Cadastros e pagamentos, mas sem deletar
+            .requestMatchers("/admin/aluno/novo", "/admin/aluno/salvar").hasAnyRole("ADMIN", "RECEPCIONISTA")
+            .requestMatchers("/admin/aluno/excluir/**").hasRole("ADMIN") // Só admin deleta
+            
             .anyRequest().authenticated()
         )
         .formLogin((form) -> form
-            .loginPage("/login") 
+            .loginPage("/login")
             .defaultSuccessUrl("/admin/dashboard", true)
-            .permitAll() // Garante que a rota de processamento do login também seja pública
+            .permitAll()
         )
-        .logout((logout) -> logout
-    .logoutUrl("/logout")
-    .logoutSuccessUrl("/login?logout") // Adiciona um parâmetro na URL
-    .invalidateHttpSession(true)
-    .deleteCookies("JSESSIONID")
-    .permitAll()
-        );
+        .logout((logout) -> logout.permitAll());
 
     return http.build();
 }
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        // Criando um usuário padrão em memória (Usuário: admin / Senha: 123)
-        @SuppressWarnings("deprecation")
-        UserDetails user = User.withDefaultPasswordEncoder()
-            .username("admin")
-            .password("123")
-            .roles("ADMIN")
-            .build();
+@Bean
+public UserDetailsService userDetailsService() {
+    // Criando usuários de teste para cada perfil
+    @SuppressWarnings("deprecation")
+    UserDetails admin = User.withDefaultPasswordEncoder()
+        .username("admin")
+        .password("123")
+        .roles("ADMIN")
+        .build();
 
-        return new InMemoryUserDetailsManager(user);
-    }
+    @SuppressWarnings("deprecation")
+    UserDetails instrutor = User.withDefaultPasswordEncoder()
+        .username("instrutor")
+        .password("123")
+        .roles("INSTRUTOR")
+        .build();
+
+    @SuppressWarnings("deprecation")
+    UserDetails recepcao = User.withDefaultPasswordEncoder()
+        .username("recepcao")
+        .password("123")
+        .roles("RECEPCIONISTA")
+        .build();
+
+    return new InMemoryUserDetailsManager(admin, instrutor, recepcao);
+}
 
 
 }
